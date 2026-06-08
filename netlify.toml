@@ -1,11 +1,14 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "server"
+  functions = "netlify/functions"
+
+[functions]
+  included_files = ["server/data/**"]
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/server/api/:splat"
+  to = "/.netlify/functions/api/:splat"
   status = 200
 
 [[redirects]]

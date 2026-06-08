@@ -7,10 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, 'data');
-const JSON_DB_PATH = path.join(DATA_DIR, 'db.json');
-
-// Ensure data directory exists
-if (!fs.existsSync(DATA_DIR)) {
+const localPath = path.join(DATA_DIR, 'db.json');
+const netlifyPath = path.join(process.cwd(), 'server', 'data', 'db.json');
+const JSON_DB_PATH = fs.existsSync(localPath) ? localPath : netlifyPath
+if (!fs.existsSync(DATA_DIR) && process.env.NODE_ENV !== 'production') {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
