@@ -1,0 +1,83 @@
+import React, { useEffect } from 'react';
+import { useNavigation } from '../context/NavigationStore';
+import { MapCanvas } from '../components/MapCanvas';
+import { AlgorithmControls } from '../components/AlgorithmControls';
+import { MetricsPanel } from '../components/MetricsPanel';
+import { HelpCircle, AlertOctagon, RefreshCw, Compass } from 'lucide-react';
+export const Dashboard = () => {
+  const {
+    presets,
+    activePreset,
+    loadPreset,
+    activeAlgorithm,
+    setActiveAlgorithm,
+    heuristicType,
+    setHeuristicType,
+    nodes,
+    startNodeId,
+    setStartNodeId,
+    endNodeId,
+    setEndNodeId,
+    generateRandomTraffic,
+    triggerTrafficAccident,
+    resetSimulation
+  } = useNavigation();
+  // Reset when loading dashboard
+  useEffect(() => {
+    resetSimulation();
+  }, []);
+  return (
+    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
+      
+      {/* Header Panel */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1>GeoGreedy <span className="text-gradient">GPS Navigation Sandbox</span></h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
+            Compare greedy heuristic pathfinding algorithms on simulated city topologies in real-time.
+          </p>
+        </div>
+      </div>
+      {/* Preset Map Selectors */}
+   
+<truncated 6209 bytes>
+                className="btn btn-glass" 
+                style={{ fontSize: '0.8rem', gap: '6px' }}
+                onClick={() => {
+                  resetSimulation();
+                  generateRandomTraffic();
+                }}
+              >
+                <RefreshCw size={14} /> Update Traffic
+              </button>
+              
+              <button 
+                className="btn btn-danger" 
+                style={{ fontSize: '0.8rem', gap: '6px' }}
+                onClick={() => {
+                  resetSimulation();
+                  triggerTrafficAccident();
+                }}
+              >
+                <AlertOctagon size={14} /> Road Accident
+              </button>
+            </div>
+          </div>
+          {/* Quick Sandbox Instructions */}
+          <div className="glass-panel" style={{ padding: '20px', display: 'flex', gap: '12px', background: 'rgba(6, 182, 212, 0.03)' }}>
+            <HelpCircle size={28} style={{ color: 'var(--accent-primary)', flexShrink: 0 }} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <h4 style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>Sandbox Instructions</h4>
+              <ul style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', paddingLeft: '14px', lineHeight: '1.5' }}>
+                <li>Drag nodes to dynamically update road lengths.</li>
+                <li>Single-click a road edge to tweak its traffic delay.</li>
+                <li>Double-click any node to set it as the **Goal**.</li>
+                <li>Compare how GBFS gets stuck on the **Mountain Maze** preset.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

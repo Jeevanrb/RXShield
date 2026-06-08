@@ -1,0 +1,76 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { Compass, Route as RouteIcon, Network, BarChart2 } from 'lucide-react';
+import { NavigationProvider } from './context/NavigationStore';
+import { Dashboard } from './pages/Dashboard';
+import { MultiRoute } from './pages/MultiRoute';
+import { NetworkPlanner } from './pages/NetworkPlanner';
+import { Analysis } from './pages/Analysis';
+const Sidebar = () => {
+  return (
+    <div className="sidebar animate-fade-in">
+      {/* Brand logo */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+        <div style={{ 
+          background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))', 
+          padding: '8px', 
+          borderRadius: '12px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          boxShadow: '0 4px 15px var(--accent-glow)'
+        }}>
+          <Compass size={24} color="white" />
+        </div>
+        <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.03em' }}>
+          Geo<span className="text-gradient">Greedy</span>
+        </h2>
+      </div>
+      <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '-16px', marginBottom: '8px' }}>
+        Greedy Algorithm Sandbox
+      </p>
+      {/* Navigation */}
+      <nav style={{
+<truncated 284 bytes>
+Name={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+          <RouteIcon size={18} /> Multi-Stop Routing
+        </NavLink>
+        <NavLink to="/network-planner" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+          <Network size={18} /> MST Network Planner
+        </NavLink>
+        <NavLink to="/analysis" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+          <BarChart2 size={18} /> Performance Insights
+        </NavLink>
+      </nav>
+      {/* System Status footer */}
+      <div style={{ marginTop: 'auto', padding: '16px', background: 'rgba(6, 182, 212, 0.04)', borderRadius: '12px', border: '1px solid rgba(6, 182, 212, 0.1)' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--accent-primary)', fontWeight: 700, marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          GPS Satellite Status
+        </p>
+        <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+          All 24 orbital satellite nodes online. Precision: ±1m.
+        </p>
+      </div>
+    </div>
+  );
+};
+const App = () => {
+  return (
+    <NavigationProvider>
+      <Router>
+        <Sidebar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/multi-route" element={<MultiRoute />} />
+            <Route path="/network-planner" element={<NetworkPlanner />} />
+            <Route path="/analysis" element={<Analysis />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </main>
+      </Router>
+    </NavigationProvider>
+  );
+};
+export default App;
